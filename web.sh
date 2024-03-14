@@ -48,7 +48,7 @@ VALIDATE $? "ENABALED user SERVICE"
 systemctl start nginx
 VALIDATE $? "STARTED OF user"
 
-if [ -d /var/share//nginx/html ]
+if [ -d /var/share/nginx/html ]
 then
     mkdir -p /tmp/BACKUP-html-$TIME_STAMP
     VALIDATE $? "LATEST BACKUP DIRECTORY CREATED"
