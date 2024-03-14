@@ -12,6 +12,7 @@ N="\e[0m"
 echo "Script started TIME: $TIME_STAMP"
 
 VALIDATE(){
+    
     if [ $1 -ne 0 ]
     then
         echo -e "$2.. $R FAILED $N"
@@ -44,7 +45,7 @@ else
     VALIDATE $? "NODEJS:18 INSTALLING"
 fi
 
-id roboshop
+id roboshop &>>$LOGFILE
 
 if [ $? -eq 0 ]
 then
@@ -88,7 +89,7 @@ if [ $? -eq 0 ]
 then
     echo -e "$R MONGO SHELL ALREADY EXITSED $N ..$Y SKIPPING $N "
 else
-    dnf install mongodb-org-shell -y
+    dnf install mongodb-org-shell -y &>>$LOGFILE
     VALIDATE $? "MONGO SHELL INSTALLATION"
 fi
 mongo --host $MONGO_HOST </app/schema/user.js &>>$LOGFILE
