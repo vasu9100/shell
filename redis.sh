@@ -30,3 +30,30 @@ else
 fi
 
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+VALIDATE $? "REDIS INSTALLATION"
+dnf module enable redis:remi-6.2 -y
+VALIDATE $? "REDIS 6.2 ENABLED"
+
+rpm -qa | grep redis
+if [ $? -eq 0 ]
+then
+    echo -e " $R REDIS ALREADY INSTALLED $N ..$Y SKIPPING $N "
+else
+    dnf install redis -y
+    VALIDATE $? "REDIS INSTALLATION"    
+fi   
+
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
+VALIDATE $? "127.0.0.1 REPLACED BY  0.0.0.0"
+
+systemctl enable redis
+VALIDATE $? "REDIS ENABLED"
+
+systemctl start redis
+VALIDATE $? "REDIS START"
+
+echo -e "PLEASE VERIFY LOCAL IP STATUS BELOW"
+
+netstat -lntp
+
+echo "SCRIPT EXCEUTION DONE AT $TIME_STAMP THANK YOU!"
