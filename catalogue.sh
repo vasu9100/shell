@@ -65,7 +65,7 @@ cd /app
 unzip -o /tmp/catalogue.zip
 VALIDATE "UNZIPPING CODE"
 
-npm install
+npm install &>>$LOGFILE
 VALIDATE "NPM INSTALLATION" &>>$LOGFILE
 
 cp /home/centos/shell/catalogue.service /etc/systemd/system/catalogue.service
@@ -83,7 +83,7 @@ VALIDATE $? "STARTED OF CATALOGUE"
 cp /home/centos/shell/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "mongo.repo COPYING"
 
-mongo --version
+mongo --version &>>$LOGFILE
 if [ $? -eq 0 ]
 then
     echo -e " $R  MONGO SHELL ALREADY EXITSED $N ..$Y SKIPPING $N "
@@ -91,7 +91,7 @@ else
     dnf install mongodb-org-shell -y
     VALIDATE $? "MONGO SHELL INSTALLATION"
 fi
-mongo --host $MONGO_HOST </app/schema/catalogue.js
+mongo --host $MONGO_HOST </app/schema/catalogue.js &>>$LOGFILE
 VALIDATE $? "LOADING SCHEMA"
 
 echo "SCRIPT EXCEUTION DONE AT $TIME_STAMP THANK YOU!"
