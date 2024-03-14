@@ -62,7 +62,7 @@ VALIDATE $? "DOWNLOADING CATALOGE.ZIP"
 
 cd /app 
 
-unzip /tmp/catalogue.zip
+unzip -o /tmp/catalogue.zip
 VALIDATE "UNZIPPING CODE"
 
 npm install
