@@ -49,4 +49,7 @@ VALIDATE $? "STARTING MONGO-DB"
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 VALIDATE $? "127.0.0.1 IS REPALACED"
 
+systemctl restart mongod
+VALIDATE $? "RESTARTED MONGODB"
+
 echo "SCRIPT EXCEUTION DONE AT $TIME_STAMP THANK YOU!"
