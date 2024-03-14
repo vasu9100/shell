@@ -14,10 +14,10 @@ echo "Script started TIME: $TIME_STAMP"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-        echo -e "$Y $2...$N $R FAILED $N"
+        echo -e "$2.. $R FAILED $N"
         exit 1
     else
-        echo -e  "$Y $2...$N $G SUCESS $N" 
+        echo -e  "$2...$N $G SUCESS $N" 
     fi
 }
 
@@ -62,7 +62,7 @@ VALIDATE $? "DOWNLOADING CATALOGE.ZIP"
 
 cd /app 
 
-unzip -o /tmp/catalogue.zip
+unzip -o /tmp/catalogue.zip &>>$LOGFILE
 VALIDATE "UNZIPPING CODE"
 
 npm install &>>$LOGFILE
@@ -86,7 +86,7 @@ VALIDATE $? "mongo.repo COPYING"
 mongo --version &>>$LOGFILE
 if [ $? -eq 0 ]
 then
-    echo -e " $R  MONGO SHELL ALREADY EXITSED $N ..$Y SKIPPING $N "
+    echo -e "$R MONGO SHELL ALREADY EXITSED $N ..$Y SKIPPING $N "
 else
     dnf install mongodb-org-shell -y
     VALIDATE $? "MONGO SHELL INSTALLATION"
