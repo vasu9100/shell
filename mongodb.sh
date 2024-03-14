@@ -13,10 +13,10 @@ echo "Script started TIME: $TIME_STAMP"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-        echo -e " $2...$R INSTALLATION FAILED $N"
+        echo -e " $2...$R FAILED $N"
         exit 1
     else
-        echo -e " $2... $G INSTALLATION SUCCESS $N"
+        echo -e " $2... $G  SUCCESS $N"
     fi
 }
 
@@ -30,12 +30,12 @@ fi
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "COPYING mongo.repo"
 
-yum list installed | grep mongodb
+yum list installed | grep mongodb &>> $LOGFILE
 
 if [ $? -ne 0 ]
 then
-    dnf install mongodb-org -y
-    VALIDATE $? "MONGO DB"
+    dnf install mongodb-org -y &>> $LOGFILE
+    VALIDATE $? "MONGO DB INSTALLATION "
 else
     echo -e "MONGO DB IS ALREADY INSTALLED.. $Y SKIIPING INSTALLATION $N" 
 fi
@@ -51,5 +51,7 @@ VALIDATE $? "127.0.0.1 IS REPALACED"
 
 systemctl restart mongod
 VALIDATE $? "RESTARTED MONGODB"
+
+netstat -lntp
 
 echo "SCRIPT EXCEUTION DONE AT $TIME_STAMP THANK YOU!"
