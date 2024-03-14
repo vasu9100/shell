@@ -29,12 +29,12 @@ else
     exit 1 
 fi
 
-dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>$LOGFILE
 VALIDATE $? "REDIS INSTALLATION"
-dnf module enable redis:remi-6.2 -y
+dnf module enable redis:remi-6.2 -y &>>$LOGFILE
 VALIDATE $? "REDIS 6.2 ENABLED"
 
-rpm -qa | grep redis
+rpm -qa | grep redis &>>$LOGFILE
 if [ $? -eq 0 ]
 then
     echo -e " $R REDIS ALREADY INSTALLED $N ..$Y SKIPPING $N "
