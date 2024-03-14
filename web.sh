@@ -70,7 +70,7 @@ VALIDATE $? "YOUR ARE IN HTML FOLDER"
 unzip -o /tmp/web.zip
 VALIDATE $? "UNZIPPING Web.zip"
 
-cp /home/centos//shell/roboshop.conf /etc/nginx/default.d/roboshop.conf 
+cp /home/centos/shell/roboshop.conf /etc/nginx/default.d/roboshop.conf 
 VALIDATE $? "COPYing roboshop.conf"
 
 systemctl restart nginx 
