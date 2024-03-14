@@ -43,12 +43,12 @@ fi
 
 
 systemctl enable nginx
-VALIDATE $? "ENABALED user SERVICE"
+VALIDATE $? "ENABALED user ngnix"
 
 systemctl start nginx
-VALIDATE $? "STARTED OF user"
+VALIDATE $? "STARTED OF nginx"
 
-if [ -d /var/share/nginx/html ]
+if [ -d /usr/share/nginx/html ]
 then
     mkdir -p /tmp/BACKUP-html-$TIME_STAMP
     VALIDATE $? "LATEST BACKUP DIRECTORY CREATED"
