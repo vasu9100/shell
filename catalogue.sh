@@ -80,7 +80,7 @@ VALIDATE $? "ENABALED CATALOGUE SERVICE"
 systemctl start catalogue
 VALIDATE $? "STARTED OF CATALOGUE"
 
-cp /home/centos/shell/mong.repo /etc/yum.repos.d/mongo.repo
+cp /home/centos/shell/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "mongo.repo COPYING"
 
 mongo --version
