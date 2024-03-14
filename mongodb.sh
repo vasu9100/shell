@@ -27,6 +27,8 @@ then
 else
     echo -e  "$G YOUR ARE A ROOT USER SHELL SCRIPT STARTS RUNNING $N"
 fi
+cp mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "COPYING mongo.repo"
 
 yum list installed | grep mongodb
 
