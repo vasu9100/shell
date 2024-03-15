@@ -23,7 +23,8 @@ do
             --instance-type "$INSTANCE_TYPE" \
             --security-group-ids "$SG_ID" \
             --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$name}]" \
-            --query 'Instances[0].PrivateIpAddress')
+            --query 'Instances[0].PrivateIpAddress'\
+            --output text)
     
     # Check if the aws command executed successfully
     if [ $? -eq 0 ]; then
