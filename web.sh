@@ -75,9 +75,4 @@ VALIDATE $? "COPYing roboshop.conf"
 
 systemctl restart nginx 
 VALIDATE $? "RESTARTED NGINX"
-
-
-
-
-
 echo "SCRIPT EXCEUTION DONE AT $TIME_STAMP THANK YOU!"
