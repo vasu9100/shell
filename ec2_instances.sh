@@ -41,7 +41,7 @@ do
             {
                 \"Action\": \"UPSERT\",
                 \"ResourceRecordSet\": {
-                    \"Name\": \"$name.gonepudirobot.online.com\",
+                    \"Name\": \"$name.gonepudirobot.online\",
                     \"Type\": \"A\",
                     \"TTL\": 1,
                     \"ResourceRecords\": [
