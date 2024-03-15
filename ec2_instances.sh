@@ -1,40 +1,65 @@
 #!/bin/bash
-INSTANCES_NAME=("mongodb" "mysql" "redis" "catalogue" "user" "cart" "shipping" "payments" "rabbitmq" "dispatch" "web")
-INSTANCE_TYPE=""
-DOMAIN_PATH="gonepudirobot.online"
-HOSTED_ZONE_ID="Z08382393NBPVIFQUJM1I"
 
-for i in "${INSTANCES_NAME[@]}"
+AMI_ID="ami-0f3c7d07486cad139"
+SG_ID="sg-0eab7d3878626d44d"
+SMALL_INSTANCE_TYPE="t2.micro"
+BIG_INSTANCES="t3.small"
+INSTANCE_NAMES=("mysql" "web" "shipping" "payment" "redis" "catalogue" "rabbit" "user" "cart" "dispatch" "mongo")
+zone_id="Z08382393NBPVIFQUJM1I"
+
+for name in "${INSTANCE_NAMES[@]}"
 do
-    if [[ $i == "mongodb" || $i == "mysql" || $i == "shipping" ]]; then
-    INSTANCE_TYPE="t2.small"
+    if [[ $name == "mysql" || $name == "redis" || $name == "mongo" ]]; then
+        echo "Launching $name instance with $BIG_INSTANCES"
+        INSTANCE_TYPE=$BIG_INSTANCES
     else
-        INSTANCE_TYPE="t2.micro"
+        echo "Launching $name instance with $SMALL_INSTANCE_TYPE"
+        INSTANCE_TYPE=$SMALL_INSTANCE_TYPE
+    fi
+    
+    # Launch instance with appropriate tags
+    result=$(aws ec2 run-instances \
+            --image-id "$AMI_ID" \
+            --instance-type "$INSTANCE_TYPE" \
+            --security-group-ids "$SG_ID" \
+            --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$name}]" \
+            --query 'Instances[0].PrivateIpAddress')
+    
+    # Check if the aws command executed successfully
+    if [ $? -eq 0 ]; then
+        echo "Instance $name launched with private IP: $result"
+    else
+        echo "Failed to launch instance $name"
+        # Handle the error as needed
     fi
 
-    PRIVATE_IPADDRESS=$(aws ec2 run-instances \
-                    --image-id ami-0f3c7d07486cad139 \
-                    --count 1 \
-                    --instance-type "$INSTANCE_TYPE" \
-                    --security-group-ids sg-0eab7d3878626d44d \
-                    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" \
-                    --query 'Instances[0].PrivateIpAddress' \
-                    --output text)
-    echo "$i : $PRIVATE_IPADDRESS" 
     aws route53 change-resource-record-sets \
-    --hosted-zone-id "$HOSTED_ZONE_ID" \
+    --hosted-zone-id "$zone_id" \
     --change-batch "{
-        \"Changes\": [{
-            \"Action\": \"UPSERT\",
-            \"ResourceRecordSet\": {
-                \"Name\": \"$i.$DOMAIN_PATH\",
-                \"Type\": \"A\",
-                \"TTL\": 1,
-                \"ResourceRecords\": [{\"Value\": \"$PRIVATE_IPADDRESS\"}]
+        \"Changes\": [
+            {
+                \"Action\": \"UPSERT\",
+                \"ResourceRecordSet\": {
+                    \"Name\": \"$name.gonepudirobot.online.com\",
+                    \"Type\": \"A\",
+                    \"TTL\": 1,
+                    \"ResourceRecords\": [
+                        {
+                            \"Value\": \"$result\"
+                        }
+                    ]
+                }
             }
-        }]
+        ]
     }"
-    echo "record created successfully for $i : $i.$DOMAIN_PATH"
-done
 
-# aws ec2 run-instances --image-id ami-xxxxxxxx --count 1 --instance-type $INSTANCE_TYPE  --security-group-ids sg-xxxxxxxx 
+
+
+    if [ $? -eq 0 ]; then
+        echo "Instance route created with $name.gonepudirobot.online private IP: $result"
+    else
+        echo "Failed to launch instance $name"
+        # Handle the error as needed
+    fi
+
+done
