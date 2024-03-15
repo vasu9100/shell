@@ -5,6 +5,7 @@ SG_ID="sg-0eab7d3878626d44d"
 SMALL_INSTANCE_TYPE="t2.micro"
 BIG_INSTANCES="t3.small"
 INSTANCE_NAMES=("mysql" "web" "shipping" "payment" "redis" "catalogue" "rabbit" "user" "cart" "dispatch" "mongo")
+zone_id="Z08382393NBPVIFQUJM1I"
 
 for name in "${INSTANCE_NAMES[@]}"
 do
@@ -31,4 +32,32 @@ do
         echo "Failed to launch instance $name"
         # Handle the error as needed
     fi
+
+    aws route53 change-resource-record-sets \
+    --hosted-zone-id "$zone_id" \
+    --change-batch "{
+        \"Changes\": [
+            {
+                \"Action\": \"UPSERT\",
+                \"ResourceRecordSet\": {
+                    \"Name\": \"$name.gonepudirobot.online\",
+                    \"Type\": \"A\",
+                    \"TTL\": 1,
+                    \"ResourceRecords\": [
+                        {
+                            \"Value\": \"$result\"
+                        }
+                    ]
+                }
+            }
+        ]
+    }"
+
+    if [ $? -eq 0 ]; then
+        echo "Instance route created with $name.gonepudirobot.online private IP: $result"
+    else
+        echo "Failed to launch instance $name"
+        # Handle the error as needed
+    fi
+
 done
