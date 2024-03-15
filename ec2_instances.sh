@@ -33,25 +33,19 @@ do
         # Handle the error as needed
     fi
 
-    route=$(aws route53 change-resource-record-sets \
+    aws route53 change-resource-record-sets \
     --hosted-zone-id "$zone_id" \
     --change-batch "{
-        \"Changes\": [
-            {
-                \"Action\": \"UPSERT\",
-                \"ResourceRecordSet\": {
-                    \"Name\": \"$name.gonepudirobot.online.com\",
-                    \"Type\": \"A\",
-                    \"TTL\": 1,
-                    \"ResourceRecords\": [
-                        {
-                            \"Value\": \"$result\"
-                        }
-                    ]
-                }
+        \"Changes\": [{
+            \"Action\": \"UPSERT\",
+            \"ResourceRecordSet\": {
+                \"Name\": \"$name.gonepudirobot.online\",
+                \"Type\": \"A\",
+                \"TTL\": 1,
+                \"ResourceRecords\": [{\"Value\": \"$result\"}]
             }
-        ]
-    }")
+        }]
+    }"
 
 
     if [ $? -eq 0 ]; then
