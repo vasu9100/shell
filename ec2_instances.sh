@@ -33,14 +33,14 @@ do
         # Handle the error as needed
     fi
 
-    aws route53 change-resource-record-sets \
+    route=$(aws route53 change-resource-record-sets \
     --hosted-zone-id "$zone_id" \
     --change-batch "{
         \"Changes\": [
             {
                 \"Action\": \"UPSERT\",
                 \"ResourceRecordSet\": {
-                    \"Name\": \"$name.gonepudirobot.online\",
+                    \"Name\": \"$name.gonepudirobot.online.com\",
                     \"Type\": \"A\",
                     \"TTL\": 1,
                     \"ResourceRecords\": [
@@ -51,7 +51,8 @@ do
                 }
             }
         ]
-    }"
+    }")
+
 
     if [ $? -eq 0 ]; then
         echo "Instance route created with $name.gonepudirobot.online private IP: $result"
