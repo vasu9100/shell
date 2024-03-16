@@ -4,15 +4,6 @@ USER_NAME="centos"
 PASSWORD="DevOps321"
 IP_ADDRESS=(
     "172.31.18.95"
-    "172.31.24.196" 
-    "172.31.17.143" 
-    "172.31.6.195" 
-    "172.31.5.226" 
-    "172.31.28.146" 
-    "172.31.27.233" 
-    "172.31.9.162"
-    "172.31.28.58"
-    "172.31.27.103"
     "172.31.17.227" )
 # Specify the filename for the SSH key
 SSH_KEY_FILE="$HOME/.ssh/vasu_pub"
@@ -46,6 +37,12 @@ do
     sshpass -p "$PASSWORD" scp "$SSH_KEY_FILE.pub" "$USER_NAME"@"$ip":~/
     VALIDATE $? "COPIED PUBLIC KEY to $ip"
     echo "Creating A directory in $ip"
+    if [ -d "$HOME/.ssh" ]
+    then
+        echo ".SSH FOLDER Existed already Making Directory Stopped"
+    else   
     sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no "$USER_NAME"@"$ip" "mkdir -p ~/.ssh"
+    VALIDATE $? ".SSH Created"
+    fi
      
 done
