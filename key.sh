@@ -68,11 +68,11 @@ do
     "
     sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no "$USER_NAME"@"$ip" "
     
-    if [ ! -s "~/.ssh/authorized_keys"  ]
+    if [ ! -s "/$HOME/.ssh/authorized_keys"  ]
     then
         echo "File is not Empty So Skipping"
     else
-        cat "~/vasu_pub.pub" > "~/.ssh/authorized_keys"
+        cat "$HOME/vasu_pub.pub" > "$HOME/.ssh/authorized_keys"
         echo "Copying done "    
 
     fi
