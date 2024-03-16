@@ -68,7 +68,7 @@ do
     "
     sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no "$USER_NAME"@"$ip" "
     
-    if [ ! -s "/$HOME/.ssh/authorized_keys"  ]
+    if [ -s "/$HOME/.ssh/authorized_keys"  ]
     then
         echo "File is not Empty So Skipping"
     else
