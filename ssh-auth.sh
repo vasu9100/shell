@@ -25,6 +25,6 @@ if [ $? -eq 0 ]
 then
     echo "KEY ALREADY EXISTIED  So SKIPPING TO KEY CREATION"
 else
-   ssh-keygen -t rsa -f "$USER_DIR"/rsa-key
+   ssh-keygen -t rsa -f "$USER_DIR"/rsa_key
    VALIDATE $? "SSH-KEY-GENERATION"
 fi
