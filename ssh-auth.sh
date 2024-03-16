@@ -4,7 +4,6 @@ ID=$(id -u)
 USER_DIR="/home/centos"
 SSH_DIR="$USER_DIR/.ssh"
 KEY_DIR="$SSH_DIR/rsa_key"
-FILE_FIND=$(find /home/centos/ 'rsa_key')
 
 VALIDATE(){
     if [ $1 -ne 0 ]
