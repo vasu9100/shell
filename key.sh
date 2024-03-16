@@ -44,5 +44,10 @@ do
     sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no "$USER_NAME"@"$ip" "mkdir -p ~/.ssh"
     VALIDATE $? ".SSH Created"
     fi
-     
+    touch $HOME/.ssh/authorized_keys
+    if [ $? -ne 0 ]
+    then
+        echo "File Existed"
+    fi    
+ 
 done
