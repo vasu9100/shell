@@ -17,10 +17,10 @@ then
     exit 1
 fi   
 
-if [ -f /home/centos/.ssh/rsa_key ]
+if [ -d /home/centos/.ssh ]
 then
     echo "KEY ALREADY EXISTIED  So SKIPPING TO KEY CREATION"
 else
-   ssh-keygen -t rsa -f /home/centos/.ssh/rsa_key 
+   ssh-keygen -t rsa -f /home/centos/rsa_key 
    VALIDATE $? "SSH-KEY-GENERATION"
 fi
