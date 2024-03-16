@@ -2,8 +2,6 @@
 
 ID=$(id -u)
 
-ssh-keygen -t rsa -f /home/centos/rsa_key
-
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
