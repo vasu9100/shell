@@ -43,6 +43,6 @@ fi
 
 for ip in "${IP_ADDRESS[@]}"
 do
-    sshpass -p "PASSWORD" scp "$SSH_KEY_FILE.pub" "$USER_NAME"@"$ip":~/
+    sshpass -p "$PASSWORD" scp "$SSH_KEY_FILE.pub" "$USER_NAME"@"$ip":~/
     VALIDATE $? "COPIED PUBLIC KEY to $ip"       
 done
