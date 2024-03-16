@@ -46,10 +46,10 @@ do
     fi
     sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no "$USER_NAME"@"$ip" "
     
-    if [ ! -f "$HOME/.ssh/authorized_keys"  ]
+    if [ ! -f "~/.ssh/authorized_keys"  ]
     then
-        touch "$HOME/.ssh/authorized_keys"
-        VALIDATE $? "File Created"
+        touch "~/.ssh/authorized_keys"
+        echo "FILE Created"
     else
         echo "FILE EXISTED"    
 
