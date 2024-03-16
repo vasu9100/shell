@@ -21,7 +21,7 @@ then
 fi   
 find "$USER_DIR" 'rsa_key'
 
-if [ $? -ne 0 ]
+if [ $? -eq 0 ]
 then
     echo "KEY ALREADY EXISTIED  So SKIPPING TO KEY CREATION"
 else
