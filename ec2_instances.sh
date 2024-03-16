@@ -63,4 +63,6 @@ do
         # Handle the error as needed
     fi
 
+    echo "IPS list:: $result"
+
 done
