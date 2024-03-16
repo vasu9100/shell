@@ -1,7 +1,7 @@
 #!/bin/bash
 ID=$(id -u)
 USER_NAME="centos"
-IP_ADRESS=(
+IP_ADDRESS=(
     "172.31.18.95"
     "172.31.24.196" 
     "172.31.17.143" 
@@ -27,9 +27,10 @@ VALIDATE(){
 
 if [ $ID -ne 0 ]
 then
-    echo "YOUR NOT ROOT USER"
+    echo "YOU'RE NOT ROOT USER"
     exit 1
 fi    
+
 # Check if the SSH key file exists
 if [ -f "$SSH_KEY_FILE" ]; then
     echo "SSH key already exists: $SSH_KEY_FILE SKIPPING"
@@ -39,11 +40,8 @@ else
     echo "SSH key generated: $SSH_KEY_FILE"
 fi
 
-for ips in "${IP_ADDRESS[@]}"
+for ip in "${IP_ADDRESS[@]}"
 do
-    scp "$SSH_KEY_FILE" "$USER_NAME"@"$ips":/"$HOME"
-    VALIDATE $? "COPIED PUBLIC KEY"       
-
-done    
-
-
+    scp "$SSH_KEY_FILE" "$USER_NAME"@"$ip":~/
+    VALIDATE $? "COPIED PUBLIC KEY to $ip"       
+done
