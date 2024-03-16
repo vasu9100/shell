@@ -55,4 +55,26 @@ do
 
     fi
     "
+    sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no "$USER_NAME"@"$ip" "
+    
+    if [ ! -f "~/.ssh/authorized_keys"  ]
+    then
+        touch "~/.ssh/authorized_keys"
+        echo "FILE Created"
+    else
+        echo "FILE EXISTED"    
+
+    fi
+    "
+    sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no "$USER_NAME"@"$ip" "
+    
+    if [ ! -s "~/.ssh/authorized_keys"  ]
+    then
+        echo "File is not Empty So Skipping"
+    else
+        cat "~/vasu.pub" > "~/.ssh/authorized_keys"
+        echo "Copying done "    
+
+    fi
+    "
 done
