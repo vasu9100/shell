@@ -1,6 +1,7 @@
 #!/bin/bash
 ID=$(id -u)
 USER_NAME="centos"
+PASSWORD="DevOps321"
 IP_ADDRESS=(
     "172.31.18.95"
     "172.31.24.196" 
@@ -14,7 +15,7 @@ IP_ADDRESS=(
     "172.31.27.103"
     "172.31.17.227" )
 # Specify the filename for the SSH key
-SSH_KEY_FILE="$HOME/.ssh/id_rsa"
+SSH_KEY_FILE="$HOME/.ssh/vasu_pub"
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -42,6 +43,7 @@ fi
 
 for ip in "${IP_ADDRESS[@]}"
 do
-    scp "$SSH_KEY_FILE" "$USER_NAME"@"$ip":~/
+    sshpass -p "PASSWORD" scp "$SSH_KEY_FILE.pub" "$USER_NAME"@"$ip":~/
     VALIDATE $? "COPIED PUBLIC KEY to $ip"       
 done
+DevOps321
