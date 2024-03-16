@@ -46,6 +46,6 @@ do
     sshpass -p "$PASSWORD" scp "$SSH_KEY_FILE.pub" "$USER_NAME"@"$ip":~/
     VALIDATE $? "COPIED PUBLIC KEY to $ip"
     echo "Creating A directory in $ip"
-    sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no "$USERNAME"@"$ip" "mkdir -p ~/.ssh"
+    sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no "$USER_NAME"@"$ip" "mkdir -p ~/.ssh"
      
 done
