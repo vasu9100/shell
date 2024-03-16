@@ -21,6 +21,6 @@ if [ -f /home/centos/.ssh/rsa_key ]
 then
     echo "KEY ALREADY EXISTIED  So SKIPPING TO KEY CREATION"
 else
-   ssh-keygen -t rsa -f /home/centos/rsa_key 
+   ssh-keygen -t rsa -f /home/centos/.ssh/rsa_key 
    VALIDATE $? "SSH-KEY-GENERATION"
 fi
