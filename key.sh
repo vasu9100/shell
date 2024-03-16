@@ -72,7 +72,7 @@ do
     then
         echo "File is not Empty So Skipping"
     else
-        cat "~/vasu.pub" > "~/.ssh/authorized_keys"
+        cat "~/vasu_pub.pub" > "~/.ssh/authorized_keys"
         echo "Copying done "    
 
     fi
