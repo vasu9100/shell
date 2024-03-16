@@ -46,4 +46,3 @@ do
     sshpass -p "PASSWORD" scp "$SSH_KEY_FILE.pub" "$USER_NAME"@"$ip":~/
     VALIDATE $? "COPIED PUBLIC KEY to $ip"       
 done
-DevOps321
